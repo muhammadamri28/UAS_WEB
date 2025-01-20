@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Daftar Tugas</h1>
+    {% if tasks %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>
+                    <strong>{{ task['title'] }}</strong>
+                </td>
+                <td>
+                    {{ task['description'] }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info text-center">
+        <p><strong>Tidak ada tugas untuk ditampilkan saat ini.</strong></p>
+        <p><em>Anda dapat menambahkan tugas baru melalui menu Kelola Tugas.</em></p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

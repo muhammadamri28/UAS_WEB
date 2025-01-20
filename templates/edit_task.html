@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+        <h2>Edit Tugas</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('edit_task', id=task['id']) }}">
+            <div class="mb-3">
+                <label for="title" class="form-label">Judul</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ task['title'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Deskripsi</label>
+                <textarea id="description" name="description" class="form-control" rows="5" required>{{ task['description'] }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Simpan</button>
+            <a href="{{ url_for('manage_tasks') }}" class="btn btn-secondary">Kembali</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

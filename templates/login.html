@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card shadow-lg" style="width: 25rem;">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Login ke Manajemen Tugas</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Masukkan username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            {% if get_flashed_messages() %}
+            <div class="alert alert-danger mt-3">
+                {% for message in get_flashed_messages() %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

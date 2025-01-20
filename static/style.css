@@ -1,0 +1,85 @@
+body {
+    background: linear-gradient(135deg, #0080ff, #e9ecef); 
+    color: #000000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0; 
+}
+
+.table th {
+    background-color: #6c757d;
+    color: white;
+    border-radius: 5px;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.alert {
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #ffc107;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.footer {
+    background-color: #343a40;
+    color: #adb5bd;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.card {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.btn-primary {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.navbar {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.navbar a:hover {
+    color: #ffc107;
+}
