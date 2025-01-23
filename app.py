@@ -1,7 +1,10 @@
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+import pymysql
 import MySQLdb.cursors
+
+pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
