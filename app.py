@@ -1,18 +1,16 @@
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import pymysql
 import MySQLdb.cursors
-
-pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'task_manager'
+app.config['MYSQL_HOST'] = 'a8y6c.h.filess.io'
+app.config['MYSQL_USER'] = 'taskmanager_anyonecamp'
+app.config['MYSQL_PASSWORD'] = 'ea41c11088690f0866fdd8321c82d8fe68aa7436'
+app.config['MYSQL_DB'] = 'taskmanager_anyonecamp'
+app.config['MYSQL_PORT'] = 3307
 
 mysql = MySQL(app)
 login_manager = LoginManager(app)
@@ -33,20 +31,31 @@ def load_user(user_id):
     return None
 
 def add_default_admin():
+    """Menambahkan admin default jika belum ada dalam database."""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM users WHERE username = 'vito'")
     user = cursor.fetchone()
     if not user:
-        cursor.execute("INSERT INTO users (id, username, password) VALUES (NULL, 'vito', 'vito123')")
+        cursor.execute("INSERT INTO users (username, password) VALUES ('vito', 'vito123')")
         mysql.connection.commit()
         print("Admin default berhasil ditambahkan: username='vito', password='vito123'")
     else:
         print("Admin default sudah ada dalam database.")
 
-# Routes
+@app.before_request
+def test_db_connection():
+    try:
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT 1")  
+        print("Database connected successfully!")
+    except Exception as e:
+        print(f"Error connecting to the database: {e}")
+
+# Routes utama
 @app.route('/')
 @login_required
 def index():
+    """Halaman utama menampilkan daftar tugas."""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM tasks')
     tasks = cursor.fetchall()
@@ -54,6 +63,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Halaman login untuk pengguna."""
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -71,12 +81,14 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    """Logout pengguna."""
     logout_user()
     return redirect(url_for('login'))
 
 @app.route('/manage', methods=['GET', 'POST'])
 @login_required
 def manage_tasks():
+    """Halaman untuk menambahkan dan melihat tugas."""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == 'POST':
         title = request.form['title']
@@ -92,6 +104,7 @@ def manage_tasks():
 @app.route('/delete/<int:id>')
 @login_required
 def delete_task(id):
+    """Menghapus tugas berdasarkan ID."""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('DELETE FROM tasks WHERE id = %s', (id,))
     mysql.connection.commit()
@@ -101,6 +114,7 @@ def delete_task(id):
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_task(id):
+    """Mengedit tugas berdasarkan ID."""
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     if request.method == 'POST':
         title = request.form['title']
